@@ -90,7 +90,7 @@ constexpr uint32_t kAVX512DQ = 1u << 14;
 constexpr uint32_t kAVX512BW = 1u << 15;
 constexpr uint32_t kGroupAVX512 = kAVX512F | kAVX512VL | kAVX512DQ | kAVX512BW;
 
-int GetBitFiled()
+int GetBitField()
 {
   int bits_ = supported_.load(std::memory_order_acquire);
   if (bits_ != -1) {
@@ -170,8 +170,15 @@ int GetBitFiled()
 
 int main()
 {
-  int cpuid = GetBitFiled();
-  std::cout << cpuid << std::endl;
+  int cpuid = GetBitField();
+  //std::cout << cpuid << std::endl;
+
+  if(cpuid & HWY_AVX512)
+    std::cout << "support AVX512" << std::endl;
+  if(cpuid & HWY_AVX2)
+    std::cout << "support AVX2" << std::endl;
+  if(cpuid & HWY_SSE4)
+    std::cout << "support SSE4" << std::endl;
 
   return 0;
 }
