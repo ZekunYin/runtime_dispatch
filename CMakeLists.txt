@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
+
+SET(CMAKE_CXX_COMPILER g++)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
@@ -7,7 +10,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(HWY_SOURCES
 	src/dispatch.cpp
 	src/compiler_specific.h
+	test/demo.cpp
 )
+
+include_directories(src)
 
 set(HWY_FLAGS
   # Avoid changing binaries based on the current time and date.
@@ -18,7 +24,7 @@ set(HWY_FLAGS
 
   # Optimizations
   -fmerge-all-constants
-
+  -mavx2 -mavx512f -msse4
   # Warnings
   -Wall
   -Wextra
@@ -52,6 +58,7 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
   )
 endif()
 
+#seems not working using msvc
 if (WIN32)
   list(APPEND HWY_FLAGS
     -Wno-c++98-compat-pedantic

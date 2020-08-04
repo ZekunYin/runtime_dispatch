@@ -14,6 +14,7 @@
 #include <atomic>
 
 #include "compiler_specific.h"
+#include "dispatch.h"
 
 bool IsBitSet(const uint32_t reg, const int index) {
   return (reg & (1U << index)) != 0;
@@ -168,17 +169,4 @@ int GetBitField()
   return bits_;
 }
 
-int main()
-{
-  int cpuid = GetBitField();
-  //std::cout << cpuid << std::endl;
 
-  if(cpuid & HWY_AVX512)
-    std::cout << "support AVX512" << std::endl;
-  if(cpuid & HWY_AVX2)
-    std::cout << "support AVX2" << std::endl;
-  if(cpuid & HWY_SSE4)
-    std::cout << "support SSE4" << std::endl;
-
-  return 0;
-}
