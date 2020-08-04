@@ -25,6 +25,7 @@ set(HWY_FLAGS
   # Optimizations
   -fmerge-all-constants
   -mavx2 -mavx512f -msse4
+  -static-libstdc++
   # Warnings
   -Wall
   -Wextra
@@ -84,6 +85,6 @@ else()
   )
 endif()
 
-
+set(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++")
 add_executable(demo ${HWY_SOURCES})
 target_compile_options(demo PRIVATE ${HWY_FLAGS})
